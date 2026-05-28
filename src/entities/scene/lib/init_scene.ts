@@ -1,5 +1,8 @@
-import * as PIXI from "pixi.js-legacy";
+import type { PixiDisplayObjectType } from "@/src/shared";
+import { PixiContainer } from "@/src/shared";
 
-export async function initScene(): Promise<PIXI.Container<PIXI.DisplayObject>> {
-  return new PIXI.Container();
+export async function initScene(): Promise<
+  PixiContainer<PixiDisplayObjectType>
+> {
+  return new PixiContainer();
 }

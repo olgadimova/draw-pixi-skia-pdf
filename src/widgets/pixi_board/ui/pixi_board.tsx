@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as PIXI from "pixi.js-legacy";
+import type {
+  PixiApplicationType,
+  PixiContainerType,
+} from "@/src/shared/lib/pixi";
+import { PixiApplication } from "@/src/shared/lib/pixi";
 
 import { initScene } from "@/src/entities";
 
 type Props = {
-  scene: PIXI.Container | null;
-  onSceneReadyAction: (scene: PIXI.Container) => void;
+  scene: PixiContainerType | null;
+  onSceneReadyAction: (scene: PixiContainerType) => void;
 };
 
-export function DrawingBoard({ scene, onSceneReadyAction }: Props) {
+export function PixiBoard({ scene, onSceneReadyAction }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const appRef = useRef<PIXI.Application | null>(null);
+  const appRef = useRef<PixiApplicationType | null>(null);
 
   useEffect(() => {
     async function init() {
@@ -20,10 +24,10 @@ export function DrawingBoard({ scene, onSceneReadyAction }: Props) {
         ref.current.innerHTML = "";
 
         if (!appRef.current) {
-          appRef.current = new PIXI.Application({
+          appRef.current = new PixiApplication({
             width: 400,
             height: 300,
-            backgroundColor: 0xcccccc,
+            backgroundColor: 0xd1d5dc,
             forceCanvas: true,
           });
         }
@@ -49,5 +53,11 @@ export function DrawingBoard({ scene, onSceneReadyAction }: Props) {
     }
   }, [scene]);
 
-  return <div ref={ref} />;
+  return (
+    <div>
+      <h3>Pixi Container</h3>
+      <br />
+      <div ref={ref}></div>
+    </div>
+  );
 }

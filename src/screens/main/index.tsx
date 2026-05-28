@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import * as PIXI from "pixi.js-legacy";
+import type { PixiContainerType } from "@/src/shared";
 
-import { DrawingBoard, Navbar } from "@/src/widgets";
+import { PixiBoard, Navbar, SkiaBoard } from "@/src/widgets";
 import { createRandomGraphicsObject } from "@/src/entities";
 
 export function Main() {
-  const [scene, setScene] = useState<PIXI.Container | null>(null);
+  const [scene, setScene] = useState<PixiContainerType | null>(null);
 
-  const handleSceneCreated = useCallback((createdScene: PIXI.Container) => {
+  const handleSceneCreated = useCallback((createdScene: PixiContainerType) => {
     setScene(createdScene);
   }, []);
 
@@ -24,10 +24,11 @@ export function Main() {
   };
 
   return (
-    <div className="flex gap-4 justify-start">
+    <div className="flex gap-4 justify-center w-full">
       <Navbar handleGenerateRandomShape={handleGenerateRandomShape} />
-      <section>
-        <DrawingBoard scene={scene} onSceneReadyAction={handleSceneCreated} />
+      <section className="flex justify-center gap-10">
+        <PixiBoard scene={scene} onSceneReadyAction={handleSceneCreated} />
+        <SkiaBoard />
       </section>
     </div>
   );

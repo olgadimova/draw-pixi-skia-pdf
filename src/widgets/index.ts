@@ -1,2 +1,3 @@
-export * from './board';
-export * from './navbar';
+export * from "./pixi_board";
+export * from "./navbar";
+export * from "./skia_board";
