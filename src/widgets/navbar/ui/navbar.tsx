@@ -1,18 +1,18 @@
 import { Button } from "@/src/shared";
 
 type Props = {
-  handleGenerateRandomShape: (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => void;
+  onGenerateRandomShape: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onExportSceneToPdf: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-export function Navbar({ handleGenerateRandomShape }: Props) {
+export function Navbar({ onGenerateRandomShape, onExportSceneToPdf }: Props) {
   return (
-    <aside className="w-[200px]">
+    <aside className="w-[200px] flex flex-col gap-3">
       <Button
         text="Сгенерировать случайные фигуры"
-        onClick={handleGenerateRandomShape}
+        onClick={onGenerateRandomShape}
       />
+      <Button text="Экспортировать в PDF" onClick={onExportSceneToPdf} />
     </aside>
   );
 }
