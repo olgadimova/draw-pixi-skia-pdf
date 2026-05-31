@@ -59,12 +59,12 @@ PDF Export
 
 ## Project Structure
 
-Project uses FSD (Feature-Slices Design) folder structure where functionality is separates into:
+Project uses FSD (Feature-Sliced Design) folder structure where functionality is separates into:
 
 - app (Next.js uses it for routing)
-- screens (pages-like folder to combine widgets and features)
+- screens - pages-like folder to combine widgets and features
 - widgets - like Navbar, SkiaBoard and PixiBoard sections
-- features - business features like export to PDF
+- features - user features like export to PDF
 - entities - business entities like graphics object and scene
 - shared - ui elements like Button, constants and types
 

@@ -63,7 +63,10 @@ export function PixiBoard({ scene, onSceneReadyAction }: Props) {
     <div>
       <h3>Pixi Container</h3>
       <br />
-      <div ref={ref}></div>
+      <div
+        ref={ref}
+        className="w-[300px] md:w-[400px] [&>canvas]:w-full [&>canvas]:h-auto"
+      ></div>
     </div>
   );
 }

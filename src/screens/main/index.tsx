@@ -48,12 +48,12 @@ export function Main() {
   }, [scene, canvasKit]);
 
   return (
-    <div className="flex gap-4 justify-center w-full">
+    <div className="flex flex-col gap-4 justify-center w-full lg:flex-row">
       <Navbar
         onGenerateRandomShape={handleGenerateRandomShape}
         onExportSceneToPdf={handleExportSceneToPdf}
       />
-      <section className="flex justify-center gap-10">
+      <section className="flex flex-col mx-auto justify-center lg:ml-0 lg:mr-auto gap-5 lg:gap:10 lg:flex-row text-center lg:text-left">
         <PixiBoard scene={scene} onSceneReadyAction={handleSceneCreated} />
 
         {canvasKit && <SkiaBoard scene={scene} CanvasKit={canvasKit} />}

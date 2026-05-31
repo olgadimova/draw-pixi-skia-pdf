@@ -66,7 +66,7 @@ export function SkiaBoard({ CanvasKit, scene }: Props) {
         ref={canvasRef}
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
-        className="bg-gray-300"
+        className="bg-gray-300 w-[300px] md:w-[400px] h-auto"
       />
     </div>
   );
