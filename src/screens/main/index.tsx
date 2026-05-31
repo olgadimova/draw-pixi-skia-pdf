@@ -41,10 +41,6 @@ export function Main() {
     }
   }, [scene]);
 
-  const handleCanvasKitReady = useCallback((ck: CanvasKitType) => {
-    setCanvasKit(ck);
-  }, []);
-
   const handleExportSceneToPdf = useCallback(() => {
     if (scene && canvasKit) {
       exportSceneToPdf(canvasKit, scene);
@@ -60,13 +56,7 @@ export function Main() {
       <section className="flex justify-center gap-10">
         <PixiBoard scene={scene} onSceneReadyAction={handleSceneCreated} />
 
-        {canvasKit && (
-          <SkiaBoard
-            scene={scene}
-            onCanvasKitReadyAction={handleCanvasKitReady}
-            CanvasKit={canvasKit}
-          />
-        )}
+        {canvasKit && <SkiaBoard scene={scene} CanvasKit={canvasKit} />}
       </section>
     </div>
   );

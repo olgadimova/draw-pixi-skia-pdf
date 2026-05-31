@@ -1,11 +1,11 @@
-import { PixiGraphics } from "@/src/shared";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, PixiGraphics } from "@/src/shared";
 
 export function createRandomGraphicsObject() {
   const graphics = new PixiGraphics();
 
-  const type = Math.floor(Math.random() * 3);
+  const type: number = Math.floor(Math.random() * 3);
 
-  const color = Math.random() * 0xffffff;
+  const color: number = Math.random() * 0xffffff;
 
   graphics.beginFill(color);
 
@@ -41,7 +41,7 @@ export function createRandomGraphicsObject() {
   graphics.endFill();
 
   // random transforms
-  graphics.position.set(random(50, 400), random(50, 300));
+  graphics.position.set(random(50, CANVAS_WIDTH), random(50, CANVAS_HEIGHT));
 
   graphics.rotation = Math.random() * Math.PI * 2;
 
@@ -50,10 +50,12 @@ export function createRandomGraphicsObject() {
   return graphics;
 }
 
+// Random number from min to max value
 function random(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+// Random float number from min to max value
 function randomFloat(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }

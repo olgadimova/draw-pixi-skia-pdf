@@ -7,15 +7,25 @@ import type {
   Canvas,
 } from "canvaskit-wasm";
 
-import { createSkiaSurface, type PixiContainerType } from "@/src/shared";
+import {
+  CANVAS_BACKGROUND_COLOR,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  createSkiaSurface,
+  type PixiContainerType,
+} from "@/src/shared";
 import { renderSkiaScene } from "@/src/features";
 
 type Props = {
   CanvasKit: CanvasKitType | null;
   scene: PixiContainerType | null;
-  onCanvasKitReadyAction: (ck: CanvasKitType) => void;
 };
 
+/*
+ * Skia Board component
+ *
+ * @param scene - Pixi scene to render to Skia surface
+ */
 export function SkiaBoard({ CanvasKit, scene }: Props) {
   const [surface, setSurface] = useState<Surface | null>(null);
 
@@ -41,7 +51,7 @@ export function SkiaBoard({ CanvasKit, scene }: Props) {
     if (CanvasKit && surface && scene) {
       const canvas: Canvas = surface.getCanvas();
 
-      canvas.clear(CanvasKit.Color(209, 213, 220)); // #d1d5dc
+      canvas.clear(CanvasKit.parseColorString(CANVAS_BACKGROUND_COLOR));
       renderSkiaScene(CanvasKit, canvas, scene);
 
       surface.flush();
@@ -54,8 +64,8 @@ export function SkiaBoard({ CanvasKit, scene }: Props) {
       <br />
       <canvas
         ref={canvasRef}
-        width={400}
-        height={300}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
         className="bg-gray-300"
       />
     </div>

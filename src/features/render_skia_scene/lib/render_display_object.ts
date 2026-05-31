@@ -17,9 +17,8 @@ export function renderDisplayObject(
   if (object instanceof PixiGraphics) {
     displayGraphics(CanvasKit, canvas, object);
   }
-
   // Containers
-  if (object instanceof PixiContainer) {
+  else if (object instanceof PixiContainer) {
     object.children.forEach((child) => {
       renderDisplayObject(CanvasKit, canvas, child);
     });

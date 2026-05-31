@@ -14,4 +14,7 @@ export type {
   GraphicsData as PixiGraphicsDataType,
   IShape as PixiIShape,
   FillStyle as PixiFillStyle,
+  ICanvas as PixiICanvas,
 } from "pixi.js-legacy";
+
+export { initPixiApplication } from "./init_pixi_application";

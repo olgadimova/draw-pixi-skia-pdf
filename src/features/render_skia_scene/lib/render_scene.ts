@@ -5,8 +5,15 @@ import type { PixiContainerType } from "@/src/shared";
 
 import { renderDisplayObject } from "./render_display_object";
 
+/**
+ * Renders Pixi scene children to Skia surface
+ *
+ * @param CanvasKit - CanvasKit instance
+ * @param canvas - Skia canvas for rendering
+ * @param scene - Pixi scene to render
+ */
 export function renderSkiaScene(
-  CanvasKit: any,
+  CanvasKit: CanvasKit,
   canvas: Canvas,
   scene: PixiContainerType,
 ) {

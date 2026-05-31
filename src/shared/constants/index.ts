@@ -1,0 +1,1 @@
+export { CANVAS_WIDTH, CANVAS_HEIGHT, CANVAS_BACKGROUND_COLOR } from "./canvas";

@@ -14,6 +14,14 @@ import type {
   Paint,
 } from "canvaskit-wasm";
 
+/**
+ * Draws graphics on Skia canvas (supports circle, rectangular, polygon shapes).
+ * Supports Pixi (translate, rotate and scale, color filling, moveTo, lineTo, drawRect)
+ *
+ * @param CanvasKit - CanvasKit instance
+ * @param canvas - Skia canvas for rendering graphics
+ * @param graphics - Pixi graphics to render
+ * */
 export function displayGraphics(
   CanvasKit: CanvasKitType,
   canvas: Canvas,
@@ -38,9 +46,10 @@ export function displayGraphics(
 
     paint.setColor(CanvasKit.Color(r, g, b, 1));
 
-    // Apply translate, rotate and scale from Pixi to Skia
+    // saving current canvas state for each object not to affect another
     canvas.save();
 
+    // Apply translate, rotate and scale from Pixi to Skia
     canvas.translate(graphics.x, graphics.y);
     canvas.rotate(graphics.rotation * (180 / Math.PI), 0, 0);
     canvas.scale(graphics.scale.x, graphics.scale.y);
@@ -76,6 +85,7 @@ export function displayGraphics(
       canvas.drawPath(path, paint);
     }
 
+    // returning to base canvas state after drawing object
     canvas.restore();
   });
 }

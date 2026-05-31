@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
-import {
+import type {
   PixiApplicationType,
   PixiContainerType,
   PixiDisplayObjectType,
-} from "@/src/shared/lib/pixi";
-import { initPixiApplication, initScene } from "@/src/entities";
+  PixiICanvas,
+} from "@/src/shared";
+import { initPixiApplication } from "@/src/shared";
+import { initScene } from "@/src/entities";
 
 type Props = {
   scene: PixiContainerType | null;
@@ -20,11 +22,11 @@ export function PixiBoard({ scene, onSceneReadyAction }: Props) {
 
   useEffect(() => {
     async function init() {
-      const container = ref.current;
+      const container: HTMLDivElement | null = ref.current;
 
       if (!container) return;
 
-      let app = appRef.current;
+      let app: PixiApplicationType<PixiICanvas> | null = appRef.current;
 
       if (!app) {
         app = initPixiApplication();
@@ -44,6 +46,7 @@ export function PixiBoard({ scene, onSceneReadyAction }: Props) {
     init();
 
     return () => {
+      // Clean out Pixi application on unmount
       appRef.current?.stage?.removeChildren();
       appRef.current?.destroy(true, true);
       appRef.current = null;

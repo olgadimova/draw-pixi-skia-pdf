@@ -1,9 +1,16 @@
 "use client";
 
-// eslint-disable-next-line
-let canvasKitPromise: Promise<any> | null = null;
+import { type CanvasKit } from "canvaskit-wasm";
 
-export async function createSkiaCanvas() {
+let canvasKitPromise: Promise<CanvasKit> | null = null;
+
+/**
+ * Loads and initializes the custom CanvasKit WASM runtime.
+ *
+ * The initialization promise is cached so CanvasKit is loaded
+ * only once during the application lifetime.
+ */
+export async function createSkiaCanvas(): Promise<CanvasKit> {
   if (canvasKitPromise) {
     return canvasKitPromise;
   }
@@ -21,7 +28,7 @@ export async function createSkiaCanvas() {
     }
 
     const script = document.createElement("script");
-    script.src = `/canvaskit/canvaskit.js`;
+    script.src = "/canvaskit/canvaskit.js";
     script.async = true;
     script.onload = async () => {
       try {
