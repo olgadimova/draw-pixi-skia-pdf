@@ -1,5 +1,4 @@
-import type { PixiDisplayObjectType } from "@/src/shared";
-import { PixiContainer } from "@/src/shared";
+import { PixiContainer, type PixiDisplayObjectType } from "@/src/shared";
 
 export async function initScene(): Promise<
   PixiContainer<PixiDisplayObjectType>

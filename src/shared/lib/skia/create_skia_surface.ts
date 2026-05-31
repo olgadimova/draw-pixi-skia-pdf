@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  CanvasKit as CanvasKitType,
-  Surface,
-} from "canvaskit-wasm/bin/canvaskit.js";
+import type { CanvasKit as CanvasKitType, Surface } from "canvaskit-wasm";
 
 export function createSkiaSurface(
   CanvasKit: CanvasKitType,

@@ -1,7 +1,10 @@
 import type { Canvas, CanvasKit } from "canvaskit-wasm";
 
-import { PixiContainer, PixiGraphics } from "@/src/shared";
-import type { PixiDisplayObjectType } from "@/src/shared";
+import {
+  PixiContainer,
+  PixiGraphics,
+  type PixiDisplayObjectType,
+} from "@/src/shared";
 
 import { displayGraphics } from "./display_graphics";
 

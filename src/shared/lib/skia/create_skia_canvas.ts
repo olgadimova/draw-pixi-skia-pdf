@@ -1,6 +1,5 @@
 "use client";
 
-const canvasKitSrc: string = "https://unpkg.com/canvaskit-wasm@0.41.1/bin/full";
 // eslint-disable-next-line
 let canvasKitPromise: Promise<any> | null = null;
 
@@ -13,7 +12,7 @@ export async function createSkiaCanvas() {
     if (window.CanvasKitInit) {
       window
         .CanvasKitInit({
-          locateFile: (file: string) => `${canvasKitSrc}/${file}`,
+          locateFile: (file: string) => `/canvaskit/${file}`,
         })
         .then(resolve)
         .catch(reject);
@@ -22,12 +21,12 @@ export async function createSkiaCanvas() {
     }
 
     const script = document.createElement("script");
-    script.src = `${canvasKitSrc}/canvaskit.js`;
+    script.src = `/canvaskit/canvaskit.js`;
     script.async = true;
     script.onload = async () => {
       try {
         const CanvasKit = await window.CanvasKitInit({
-          locateFile: (file: string) => `${canvasKitSrc}/${file}`,
+          locateFile: (file: string) => `/canvaskit/${file}`,
         });
 
         resolve(CanvasKit);

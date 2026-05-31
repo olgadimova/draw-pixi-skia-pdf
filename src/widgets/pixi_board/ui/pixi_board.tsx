@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type {
+
+import {
   PixiApplicationType,
   PixiContainerType,
+  PixiDisplayObjectType,
 } from "@/src/shared/lib/pixi";
-import { PixiApplication } from "@/src/shared/lib/pixi";
-
-import { initScene } from "@/src/entities";
+import { initPixiApplication, initScene } from "@/src/entities";
 
 type Props = {
   scene: PixiContainerType | null;
@@ -20,23 +20,25 @@ export function PixiBoard({ scene, onSceneReadyAction }: Props) {
 
   useEffect(() => {
     async function init() {
-      if (ref.current) {
-        ref.current.innerHTML = "";
+      const container = ref.current;
 
-        if (!appRef.current) {
-          appRef.current = new PixiApplication({
-            width: 400,
-            height: 300,
-            backgroundColor: 0xd1d5dc,
-            forceCanvas: true,
-          });
-        }
+      if (!container) return;
 
-        ref.current?.appendChild(appRef.current?.view as HTMLCanvasElement);
+      let app = appRef.current;
 
-        const appScene = await initScene();
-        onSceneReadyAction(appScene);
+      if (!app) {
+        app = initPixiApplication();
+        appRef.current = app;
       }
+
+      if (app.view.parentNode !== container) {
+        container.appendChild(app.view as HTMLCanvasElement);
+      }
+
+      const appScene: PixiContainerType<PixiDisplayObjectType> =
+        await initScene();
+
+      onSceneReadyAction(appScene);
     }
 
     init();
@@ -44,12 +46,13 @@ export function PixiBoard({ scene, onSceneReadyAction }: Props) {
     return () => {
       appRef.current?.stage?.removeChildren();
       appRef.current?.destroy(true, true);
+      appRef.current = null;
     };
   }, [onSceneReadyAction]);
 
   useEffect(() => {
     if (scene && appRef.current) {
-      appRef.current.stage.addChild(scene);
+      appRef.current.stage?.addChild(scene);
     }
   }, [scene]);
 

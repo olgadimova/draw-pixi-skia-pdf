@@ -1,20 +1,33 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import type { PixiContainerType } from "@/src/shared";
-import { PixiContainer } from "@/src/shared";
+import { useState, useCallback, useEffect } from "react";
+import type { CanvasKit as CanvasKitType } from "canvaskit-wasm";
 
+import { createSkiaCanvas, PixiContainerType } from "@/src/shared";
+import { PixiContainer } from "@/src/shared";
 import { PixiBoard, Navbar, SkiaBoard } from "@/src/widgets";
 import { createRandomGraphicsObject } from "@/src/entities";
+import { exportSceneToPdf } from "@/src/features";
 
 export function Main() {
   const [scene, setScene] = useState<PixiContainerType | null>(null);
+  const [canvasKit, setCanvasKit] = useState<CanvasKitType | null>(null);
+
+  // setup CanvasKit
+  useEffect(() => {
+    const initCanvasKit = async () => {
+      const canvasKit: CanvasKitType = await createSkiaCanvas();
+      setCanvasKit(canvasKit);
+    };
+
+    initCanvasKit();
+  }, []);
 
   const handleSceneCreated = useCallback((createdScene: PixiContainerType) => {
     setScene(createdScene);
   }, []);
 
-  const handleGenerateRandomShape = () => {
+  const handleGenerateRandomShape = useCallback(() => {
     if (scene) {
       const nextScene = new PixiContainer();
 
@@ -26,9 +39,17 @@ export function Main() {
 
       setScene(nextScene);
     }
-  };
+  }, [scene]);
 
-  const handleExportSceneToPdf = () => {};
+  const handleCanvasKitReady = useCallback((ck: CanvasKitType) => {
+    setCanvasKit(ck);
+  }, []);
+
+  const handleExportSceneToPdf = useCallback(() => {
+    if (scene && canvasKit) {
+      exportSceneToPdf(canvasKit, scene);
+    }
+  }, [scene, canvasKit]);
 
   return (
     <div className="flex gap-4 justify-center w-full">
@@ -38,7 +59,14 @@ export function Main() {
       />
       <section className="flex justify-center gap-10">
         <PixiBoard scene={scene} onSceneReadyAction={handleSceneCreated} />
-        <SkiaBoard scene={scene} />
+
+        {canvasKit && (
+          <SkiaBoard
+            scene={scene}
+            onCanvasKitReadyAction={handleCanvasKitReady}
+            CanvasKit={canvasKit}
+          />
+        )}
       </section>
     </div>
   );

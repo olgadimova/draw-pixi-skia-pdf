@@ -9,10 +9,13 @@ export function Navbar({ onGenerateRandomShape, onExportSceneToPdf }: Props) {
   return (
     <aside className="w-[200px] flex flex-col gap-3">
       <Button
-        text="Сгенерировать случайные фигуры"
+        text="Сгенерировать случайные фигуры (Generate random shapes)"
         onClick={onGenerateRandomShape}
       />
-      <Button text="Экспортировать в PDF" onClick={onExportSceneToPdf} />
+      <Button
+        text="Экспортировать в PDF (Export to PDF)"
+        onClick={onExportSceneToPdf}
+      />
     </aside>
   );
 }

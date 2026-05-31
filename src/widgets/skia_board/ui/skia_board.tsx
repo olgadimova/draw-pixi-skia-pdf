@@ -1,33 +1,32 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { CanvasKit, Surface, Canvas } from "canvaskit-wasm";
+import type {
+  CanvasKit as CanvasKitType,
+  Surface,
+  Canvas,
+} from "canvaskit-wasm";
 
-import { createSkiaCanvas, createSkiaSurface } from "@/src/shared";
-import type { PixiContainerType } from "@/src/shared/lib/pixi";
+import { createSkiaSurface, type PixiContainerType } from "@/src/shared";
 import { renderSkiaScene } from "@/src/features";
 
 type Props = {
+  CanvasKit: CanvasKitType | null;
   scene: PixiContainerType | null;
+  onCanvasKitReadyAction: (ck: CanvasKitType) => void;
 };
 
-export function SkiaBoard({ scene }: Props) {
-  const [CanvasKit, setCanvasKit] = useState<CanvasKit | null>(null);
-
+export function SkiaBoard({ CanvasKit, scene }: Props) {
   const [surface, setSurface] = useState<Surface | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     async function init() {
-      if (canvasRef.current) {
-        // create container canvas
-        const canvasKit: CanvasKit = await createSkiaCanvas();
-        setCanvasKit(canvasKit);
-
+      if (canvasRef.current && CanvasKit) {
         // create canvas surface
         const canvasSurface: Surface = createSkiaSurface(
-          canvasKit,
+          CanvasKit,
           canvasRef.current,
         );
         setSurface(canvasSurface);
@@ -35,14 +34,14 @@ export function SkiaBoard({ scene }: Props) {
     }
 
     init();
-  }, []);
+  }, [CanvasKit]);
 
+  // Render Pixi scene to Skia canvas
   useEffect(() => {
     if (CanvasKit && surface && scene) {
       const canvas: Canvas = surface.getCanvas();
 
       canvas.clear(CanvasKit.Color(209, 213, 220)); // #d1d5dc
-
       renderSkiaScene(CanvasKit, canvas, scene);
 
       surface.flush();
