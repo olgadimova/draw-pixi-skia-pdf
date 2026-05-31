@@ -2,6 +2,8 @@
 
 A rendering playground demonstrating how a Pixi.js scene can be rendered using Skia (CanvasKit) and exported as a vector PDF.
 
+#### Live demo: https://draw-pixi-skia-pdf-od.netlify.app/ (use vpn if needed)
+
 ## Technologies
 
 - React
