@@ -17,7 +17,7 @@ import {
 import { renderSkiaScene } from "@/src/features";
 
 type Props = {
-  CanvasKit: CanvasKitType | null;
+  CanvasKit: CanvasKitType;
   scene: PixiContainerType | null;
 };
 
@@ -48,7 +48,7 @@ export function SkiaBoard({ CanvasKit, scene }: Props) {
 
   // Render Pixi scene to Skia canvas
   useEffect(() => {
-    if (CanvasKit && surface && scene) {
+    if (surface && scene) {
       const canvas: Canvas = surface.getCanvas();
 
       canvas.clear(CanvasKit.parseColorString(CANVAS_BACKGROUND_COLOR));

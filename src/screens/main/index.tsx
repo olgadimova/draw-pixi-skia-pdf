@@ -5,7 +5,7 @@ import type { CanvasKit as CanvasKitType } from "canvaskit-wasm";
 
 import { createSkiaCanvas, PixiContainerType } from "@/src/shared";
 import { PixiContainer } from "@/src/shared";
-import { PixiBoard, Navbar, SkiaBoard } from "@/src/widgets";
+import { PixiBoard, Navbar, SkiaBoard, SkiaBoardLoader } from "@/src/widgets";
 import { createRandomGraphicsObject } from "@/src/entities";
 import { exportSceneToPdf } from "@/src/features";
 
@@ -56,7 +56,11 @@ export function Main() {
       <section className="flex flex-col mx-auto justify-center lg:ml-0 lg:mr-auto gap-5 lg:gap:10 lg:flex-row text-center lg:text-left">
         <PixiBoard scene={scene} onSceneReadyAction={handleSceneCreated} />
 
-        {canvasKit && <SkiaBoard scene={scene} CanvasKit={canvasKit} />}
+        {canvasKit ? (
+          <SkiaBoard scene={scene} CanvasKit={canvasKit} />
+        ) : (
+          <SkiaBoardLoader />
+        )}
       </section>
     </div>
   );
